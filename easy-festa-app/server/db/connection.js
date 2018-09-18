@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const dbName = 'easyfesta';
 
 // connect to the database
-mongoose.connect(`mongodb://matheus:12345@ds137054.mlab.com:37054/${dbName}`);
+mongoose.connect(`mongodb://mat:manutencao2018@ds261342.mlab.com:61342/${dbName}`);
 
 // get notified if the connection
 // was successful or not
