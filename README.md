@@ -1,3 +1,4 @@
+
 # Ferramentas Utilizadas (Front-end)
 - Angluar 2: https://angular.io/
 - Bootstrap 4 : https://v4-alpha.getbootstrap.com/
@@ -33,3 +34,8 @@
 
 # Sugestão de cursos e guias
 - Angular 2: https://loiane.training/course/angular-2/
+
+OBS.: Motivados pela facilidade no deploy realizamos a divisão física entre os diretórios do Frontend e backend
+	-Criando assim dois novos diretório
+		*Frontend: no reposotório easy-festa-front
+		*Backend : no repositório easy-festa-api
