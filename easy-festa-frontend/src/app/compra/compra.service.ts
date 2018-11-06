@@ -15,7 +15,7 @@ export class CompraService {
 
       let options: Object = this.getHeaders();
       let compras = this.http      
-      .get(`https://young-ravine-88498.herokuapp.com:8080/api/consumidor/`+id+`/compras`, options)
+      .get(`https://young-ravine-88498.herokuapp.com/api/consumidor/`+id+`/compras`, options)
       .map((res:Response) => res.json());
       return compras;
   }
@@ -24,7 +24,7 @@ export class CompraService {
     
           let options: Object = this.getHeaders();
           let compras = this.http      
-          .get(`https://young-ravine-88498.herokuapp.com:8080/api/fornecedor/`+id+`/compras`, options)
+          .get(`https://young-ravine-88498.herokuapp.com/api/fornecedor/`+id+`/compras`, options)
           .map((res:Response) => res.json());
           return compras;
       }
@@ -34,7 +34,7 @@ export class CompraService {
       let headers = new Headers({ 'Content-Type': 'application/json' });
       let options = new RequestOptions({ headers: headers });
 
-      return this.http.post(`https://young-ravine-88498.herokuapp.com:8080/api/compra`, body, options).map((res: Response) => res.json());
+      return this.http.post(`https://young-ravine-88498.herokuapp.com/api/compra`, body, options).map((res: Response) => res.json());
   }
 
     updateCompra(compra: Compra) {
@@ -42,7 +42,7 @@ export class CompraService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post(`https://young-ravine-88498.herokuapp.com:8080/api/compra/editar`, body, options).map((res: Response) => res.json());
+        return this.http.post(`https://young-ravine-88498.herokuapp.com/api/compra/editar`, body, options).map((res: Response) => res.json());
     }
 
 
@@ -51,7 +51,7 @@ export class CompraService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.get(`https://young-ravine-88498.herokuapp.com:8080/api/compra/`+body, options).map((res: Response) => res.json());
+    return this.http.get(`https://young-ravine-88498.herokuapp.com/api/compra/`+body, options).map((res: Response) => res.json());
 
     }
 

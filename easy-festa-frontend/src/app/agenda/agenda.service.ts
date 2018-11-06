@@ -17,7 +17,7 @@ export class AgendaService {
       let headers = new Headers({ 'Content-Type': 'application/json' });
       let options = new RequestOptions({ headers: headers });
 
-      return this.http.post(`https://young-ravine-88498.herokuapp.com:8080/api/agendamento`, body, options).map((res: Response) => res.json());
+      return this.http.post(`https://young-ravine-88498.herokuapp.com/api/agendamento`, body, options).map((res: Response) => res.json());
   }
 
   updateAgendamento(agendamento: Agendamento) {
@@ -28,7 +28,7 @@ export class AgendaService {
       let headers = new Headers({ 'Content-Type': 'application/json' });
       let options = new RequestOptions({ headers: headers });
 
-      return this.http.post(`https://young-ravine-88498.herokuapp.com:8080/api/agendamento/editar`, body, options).map((res: Response) => res.json());
+      return this.http.post(`https://young-ravine-88498.herokuapp.com/api/agendamento/editar`, body, options).map((res: Response) => res.json());
   }
 
   removeAgendamento(id: String) {
@@ -36,7 +36,7 @@ export class AgendaService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.delete(`https://young-ravine-88498.herokuapp.com:8080/api/agendamento/`+body, options).map((res: Response) => res.json());
+    return this.http.delete(`https://young-ravine-88498.herokuapp.com/api/agendamento/`+body, options).map((res: Response) => res.json());
     
   }
 
@@ -45,7 +45,7 @@ export class AgendaService {
           let idUsuario = localStorage.getItem('id'); 
           let options: Object = this.getHeaders();
           let agendamentos = this.http      
-          .get(`https://young-ravine-88498.herokuapp.com:8080/api/`+idUsuario+`/agendamentos`, options)
+          .get(`https://young-ravine-88498.herokuapp.com/api/`+idUsuario+`/agendamentos`, options)
           .map((res:Response) => res.json());
           return agendamentos;
   }

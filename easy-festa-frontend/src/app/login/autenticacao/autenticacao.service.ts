@@ -45,7 +45,7 @@ export class AutenticacaoService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
   
-    this.http.post(`https://young-ravine-88498.herokuapp.com:8080/api/login/provisorio`, body, options).map((res: Response) => res.json())
+    this.http.post(`https://young-ravine-88498.herokuapp.com/api/login/provisorio`, body, options).map((res: Response) => res.json())
     .subscribe(
       data=> {
 

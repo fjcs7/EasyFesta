@@ -13,7 +13,7 @@ export class HomeService {
     let options: Object = this.getHeaders();
     let idFornecedor = localStorage.getItem("id");
     let faturamento = this.http      
-    .get(`https://young-ravine-88498.herokuapp.com:8080/api/fluxo/de/caixa/`+idFornecedor, options)
+    .get(`https://young-ravine-88498.herokuapp.com/api/fluxo/de/caixa/`+idFornecedor, options)
     .map((res:Response) => res.json());
     return faturamento;
 }

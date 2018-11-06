@@ -15,7 +15,7 @@ export class AnuncioService {
 
       let options: Object = this.getHeaders();
       let anuncios = this.http      
-      .get(`https://young-ravine-88498.herokuapp.com:8080/api/anuncios`, options)
+      .get(`https://young-ravine-88498.herokuapp.com/api/anuncios`, options)
       .map((res:Response) => res.json());
       return anuncios;
   }
@@ -25,7 +25,7 @@ export class AnuncioService {
           let options: Object = this.getHeaders();
           let idFornecedor = localStorage.getItem("id");
           let anuncios = this.http      
-          .get(`https://young-ravine-88498.herokuapp.com:8080/api/`+idFornecedor+`/anuncios`, options)
+          .get(`https://young-ravine-88498.herokuapp.com/api/`+idFornecedor+`/anuncios`, options)
           .map((res:Response) => res.json());
           return anuncios;
       }
@@ -35,7 +35,7 @@ export class AnuncioService {
       let headers = new Headers({ 'Content-Type': 'application/json' });
       let options = new RequestOptions({ headers: headers });
 
-      return this.http.post(`https://young-ravine-88498.herokuapp.com:8080/api/anuncio`, body, options).map((res: Response) => res.json());
+      return this.http.post(`https://young-ravine-88498.herokuapp.com/api/anuncio`, body, options).map((res: Response) => res.json());
   }
 
   updateAnuncio(anuncio: Anuncio) {
@@ -43,7 +43,7 @@ export class AnuncioService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(`https://young-ravine-88498.herokuapp.com:8080/api/anuncio/editar`, body, options).map((res: Response) => res.json());
+    return this.http.post(`https://young-ravine-88498.herokuapp.com/api/anuncio/editar`, body, options).map((res: Response) => res.json());
 }
 
   removeAnuncio(id: String) {
@@ -51,7 +51,7 @@ export class AnuncioService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.delete(`https://young-ravine-88498.herokuapp.com:8080/api/anuncio/`+body, options).map((res: Response) => res.json());
+    return this.http.delete(`https://young-ravine-88498.herokuapp.com/api/anuncio/`+body, options).map((res: Response) => res.json());
     
   }
 
@@ -60,7 +60,7 @@ export class AnuncioService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.get(`https://young-ravine-88498.herokuapp.com:8080/api/anuncio/`+body, options).map((res: Response) => res.json());
+    return this.http.get(`https://young-ravine-88498.herokuapp.com/api/anuncio/`+body, options).map((res: Response) => res.json());
     
   }
 

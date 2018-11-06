@@ -11,7 +11,7 @@ export class EventoService {
 
   getEventos(idConsumidor): Observable<Evento[]> {
     const options: Object = this.getHeaders();
-    const eventos = this.http.get('https://young-ravine-88498.herokuapp.com:8080/api/'+idConsumidor+'/eventos', options).map((res: Response) => res.json());
+    const eventos = this.http.get('https://young-ravine-88498.herokuapp.com/api/'+idConsumidor+'/eventos', options).map((res: Response) => res.json());
     return eventos;
   }
 
@@ -27,7 +27,7 @@ export class EventoService {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({ headers: headers });
 
-    return this.http.post('https://young-ravine-88498.herokuapp.com:8080/api/evento', body, options).map((res: Response) => res.json());
+    return this.http.post('https://young-ravine-88498.herokuapp.com/api/evento', body, options).map((res: Response) => res.json());
   }
 
   removeEvento(id: Number) {
@@ -35,7 +35,7 @@ export class EventoService {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({ headers: headers });
 
-    return this.http.delete('https://young-ravine-88498.herokuapp.com:8080/api/evento/' + body, options).map((res: Response) => res.json());
+    return this.http.delete('https://young-ravine-88498.herokuapp.com/api/evento/' + body, options).map((res: Response) => res.json());
 
   }
 
@@ -44,7 +44,7 @@ export class EventoService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.get('https://young-ravine-88498.herokuapp.com:8080/api/evento/' + body, options).map((res: Response) => res.json());
+    return this.http.get('https://young-ravine-88498.herokuapp.com/api/evento/' + body, options).map((res: Response) => res.json());
   }
 
   editaEvento(evento: Evento) {
@@ -52,7 +52,7 @@ export class EventoService {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
 
-    return this.http.post('https://young-ravine-88498.herokuapp.com:8080/api/evento/editar', body, options).
+    return this.http.post('https://young-ravine-88498.herokuapp.com/api/evento/editar', body, options).
       map( (res: Response) => res.json() );
 
   }

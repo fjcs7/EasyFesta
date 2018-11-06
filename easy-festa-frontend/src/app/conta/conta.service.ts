@@ -19,7 +19,7 @@ export class ContaService {
       let headers = new Headers({ 'Content-Type': 'application/json' });
       let options = new RequestOptions({ headers: headers });
 
-      return this.http.post(`https://young-ravine-88498.herokuapp.com:8080/api/consumidor`, body, options).map((res: Response) => res.json());
+      return this.http.post(`https://young-ravine-88498.herokuapp.com/api/consumidor`, body, options).map((res: Response) => res.json());
   }
 
   addFornecedor(fornecedor: Fornecedor) {
@@ -27,11 +27,11 @@ export class ContaService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(`https://young-ravine-88498.herokuapp.com:8080/api/fornecedor`, body, options).map((res: Response) => res.json());
+    return this.http.post(`https://young-ravine-88498.herokuapp.com/api/fornecedor`, body, options).map((res: Response) => res.json());
 }
 
   getEndereco(cep) {
-    return this.http.get(`http://viacep.com.br/ws/`+cep+`/json/`).map((res: Response) => res.json());
+    return this.http.get(`https://young-ravine-88498.herokuapp.com/api/cep/${cep}`).map((res: Response) => res.json());
   }
 
   private getHeaders() {
@@ -50,7 +50,7 @@ export class ContaService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.get(`https://young-ravine-88498.herokuapp.com:8080/api/consumidor/`+body, options).map((res: Response) => res.json());
+    return this.http.get(`https://young-ravine-88498.herokuapp.com/api/consumidor/`+body, options).map((res: Response) => res.json());
     
   }
 
@@ -59,7 +59,7 @@ export class ContaService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.get(`https://young-ravine-88498.herokuapp.com:8080/api/fornecedor/`+body, options).map((res: Response) => res.json());
+    return this.http.get(`https://young-ravine-88498.herokuapp.com/api/fornecedor/`+body, options).map((res: Response) => res.json());
     
   }
 
@@ -68,7 +68,7 @@ export class ContaService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(`https://young-ravine-88498.herokuapp.com:8080/api/fornecedor/editar`, body, options).map((res: Response) => res.json());
+    return this.http.post(`https://young-ravine-88498.herokuapp.com/api/fornecedor/editar`, body, options).map((res: Response) => res.json());
   }
 
   updateConsumidor(consumidor: Consumidor) {
@@ -76,7 +76,7 @@ export class ContaService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(`https://young-ravine-88498.herokuapp.com:8080/api/consumidor/editar`, body, options).map((res: Response) => res.json());
+    return this.http.post(`https://young-ravine-88498.herokuapp.com/api/consumidor/editar`, body, options).map((res: Response) => res.json());
   }
 
   removerConsumidor(id) {
@@ -84,7 +84,7 @@ export class ContaService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.delete(`https://young-ravine-88498.herokuapp.com:8080/api/consumidor/`+body, options).map((res: Response) => res.json());
+    return this.http.delete(`https://young-ravine-88498.herokuapp.com/api/consumidor/`+body, options).map((res: Response) => res.json());
         
   }
 
@@ -93,7 +93,7 @@ export class ContaService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.delete(`https://young-ravine-88498.herokuapp.com:8080/api/fornecedor/`+body, options).map((res: Response) => res.json());
+    return this.http.delete(`https://young-ravine-88498.herokuapp.com/api/fornecedor/`+body, options).map((res: Response) => res.json());
         
   }
 }

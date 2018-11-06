@@ -2,6 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const request = require('request');
+
 
 const ObjectId = mongoose.Types.ObjectId;
 
@@ -12,11 +14,12 @@ const Evento = require('../models/evento');
 const Agendamento = require('../models/agendamento');
 const Compra = require('../models/compra');
 
+
 // Add headers
-router.use(function(req, res, next) {
+router.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+    res.setHeader('Access-Control-Allow-Origin', 'https://safe-taiga-89204.herokuapp.com');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -37,21 +40,21 @@ router.get('/fluxo/de/caixa/:id', (req, res, next) => {
     let idFornecedor = req.params['id'];
 
     Compra.aggregate(
-        {$match: {fornecedor: ObjectId(idFornecedor)}},
-        { $unwind : "$pagamentos"},
-        {$group : {_id : { mes: { $month: "$pagamentos.data" }, ano: { $year: "$pagamentos.data" }}, faturamento:{$sum: "$pagamentos.valor"}}}
+        { $match: { fornecedor: ObjectId(idFornecedor) } },
+        { $unwind: "$pagamentos" },
+        { $group: { _id: { mes: { $month: "$pagamentos.data" }, ano: { $year: "$pagamentos.data" } }, faturamento: { $sum: "$pagamentos.valor" } } }
     ).exec().then(
-        callback=>{
+        callback => {
             res.json(callback);
         }
-    );    
+    );
 })
 
 
 //Get Anuncios (Fornecedor)
 router.get('/:id/anuncios', (req, res, next) => {
     let idFornecedor = req.params['id'];
-    Anuncio.find({fornecedor: idFornecedor},function(err, anuncios) {
+    Anuncio.find({ fornecedor: idFornecedor }, function (err, anuncios) {
         res.json(anuncios);
     })
 })
@@ -59,7 +62,7 @@ router.get('/:id/anuncios', (req, res, next) => {
 //Get Anuncios (Fornecedor)
 router.get('/anuncios', (req, res, next) => {
 
-    Anuncio.find({publicado: "true"},function(err, anuncios) {
+    Anuncio.find({ publicado: "true" }, function (err, anuncios) {
         res.json(anuncios);
     })
 })
@@ -86,7 +89,7 @@ router.post('/anuncio', (req, res, next) => {
 
 //Delete Anuncio
 router.delete('/anuncio/:id', (req, res, next) => {
-    Anuncio.remove({ _id: req.params.id }, function(err, result) {
+    Anuncio.remove({ _id: req.params.id }, function (err, result) {
         if (err) {
             res.json(err)
         } else {
@@ -98,7 +101,7 @@ router.delete('/anuncio/:id', (req, res, next) => {
 //Buscar Anuncio
 router.get('/anuncio/:id', (req, res, next) => {
     let id = req.params.id;
-    Anuncio.findById(id, function(err, anuncio) {
+    Anuncio.findById(id, function (err, anuncio) {
         if (err) {
             res.json(err)
         } else {
@@ -111,7 +114,7 @@ router.get('/anuncio/:id', (req, res, next) => {
 router.post('/anuncio/editar', (req, res, next) => {
     let id = req.body._id;
 
-    Anuncio.findById(id, function(err, anuncio) {
+    Anuncio.findById(id, function (err, anuncio) {
         if (err) {
             res.json(err);
 
@@ -132,12 +135,12 @@ router.post('/anuncio/editar', (req, res, next) => {
 //Get Agendamentos
 router.get('/:id/agendamentos', (req, res, next) => {
     let idUsuario = req.params['id'];
-    Agendamento.find({usuario: idUsuario},function(err, agendamentos) {
-        Evento.find({consumidor: idUsuario},function(err, eventos){
+    Agendamento.find({ usuario: idUsuario }, function (err, agendamentos) {
+        Evento.find({ consumidor: idUsuario }, function (err, eventos) {
             let agendamento;
-            for(let evento of eventos) {
+            for (let evento of eventos) {
                 agendamento = new Agendamento();
-                agendamento._id = idUsuario+evento._id+"";
+                agendamento._id = idUsuario + evento._id + "";
                 agendamento.title = evento.nome;
                 agendamento.description = evento.desc;
                 agendamento.start = evento.dataevento;
@@ -177,7 +180,7 @@ router.post('/agendamento', (req, res, next) => {
 router.post('/agendamento/editar', (req, res, next) => {
     let id = req.body._id;
 
-    Agendamento.findById(id, function(err, agendamento) {
+    Agendamento.findById(id, function (err, agendamento) {
         if (err) {
             res.json(err);
 
@@ -195,7 +198,7 @@ router.post('/agendamento/editar', (req, res, next) => {
 
 //Delete Agendamento
 router.delete('/agendamento/:id', (req, res, next) => {
-    Agendamento.remove({ _id: req.params.id }, function(err, result) {
+    Agendamento.remove({ _id: req.params.id }, function (err, result) {
         if (err) {
             res.json(err)
         } else {
@@ -231,12 +234,12 @@ router.post('/consumidor', (req, res, next) => {
 //Buscar Consumidor
 router.get('/consumidor/:id', (req, res, next) => {
     let id = req.params.id;
-    Consumidor.findById(id, function(err, consumidor) {
+    Consumidor.findById(id, function (err, consumidor) {
         if (err) {
             res.json(err)
         } else {
             let informacoesConsumidor;
-            Evento.count({ consumidor: id }, function(err, qtd) {
+            Evento.count({ consumidor: id }, function (err, qtd) {
                 if (err) {
                     res.json(err)
                 } else {
@@ -256,7 +259,7 @@ router.get('/consumidor/:id', (req, res, next) => {
 
 //Delete Consumidor
 router.delete('/consumidor/:id', (req, res, next) => {
-    Consumidor.remove({ _id: req.params.id }, function(err, result) {
+    Consumidor.remove({ _id: req.params.id }, function (err, result) {
         if (err) {
             res.json(err)
         } else {
@@ -296,7 +299,7 @@ router.post('/fornecedor', (req, res, next) => {
 
 //Delete Consumidor
 router.delete('/consumidor/:id', (req, res, next) => {
-    Consumidor.remove({ _id: req.params.id }, function(err, result) {
+    Consumidor.remove({ _id: req.params.id }, function (err, result) {
         if (err) {
             res.json(err)
         } else {
@@ -307,7 +310,7 @@ router.delete('/consumidor/:id', (req, res, next) => {
 
 //Delete Fornecedor
 router.delete('/fornecedor/:id', (req, res, next) => {
-    Fornecedor.remove({ _id: req.params.id }, function(err, result) {
+    Fornecedor.remove({ _id: req.params.id }, function (err, result) {
         if (err) {
             res.json(err)
         } else {
@@ -319,12 +322,12 @@ router.delete('/fornecedor/:id', (req, res, next) => {
 //Buscar Fornecedor
 router.get('/fornecedor/:id', (req, res, next) => {
     let id = req.params.id;
-    Fornecedor.findById(id, function(err, fornecedor) {
+    Fornecedor.findById(id, function (err, fornecedor) {
         if (err) {
             res.json(err)
         } else {
             let informacoesFornecedor;
-            Anuncio.count({ fornecedor: id }, function(err, qtd) {
+            Anuncio.count({ fornecedor: id }, function (err, qtd) {
                 if (err) {
                     res.json(err)
                 } else {
@@ -345,7 +348,7 @@ router.get('/fornecedor/:id', (req, res, next) => {
 //Update Consumidor
 router.post('/consumidor/editar', (req, res, next) => {
     let id = req.body._id;
-    Consumidor.findById(id, function(err, consumidor) {
+    Consumidor.findById(id, function (err, consumidor) {
         if (err) {
             res.json(err);
 
@@ -367,7 +370,7 @@ router.post('/consumidor/editar', (req, res, next) => {
 //Update Fornecedor
 router.post('/fornecedor/editar', (req, res, next) => {
     let id = req.body._id;
-    Fornecedor.findById(id, function(err, fornecedor) {
+    Fornecedor.findById(id, function (err, fornecedor) {
         if (err) {
             res.json(err);
 
@@ -400,16 +403,16 @@ Início Compras
 
 //Get Compras por Consumidor
 router.get('/consumidor/:id/compras', (req, res, next) => {
-    
-        Compra.find({ consumidor: req.params.id }, function(err, compras) {
-            res.json(compras);
-        })
+
+    Compra.find({ consumidor: req.params.id }, function (err, compras) {
+        res.json(compras);
+    })
 })
 
 router.get('/fornecedor/:id/compras', (req, res, next) => {
-    
-    Compra.find({ fornecedor: req.params.id },function(err, compras) {
-        
+
+    Compra.find({ fornecedor: req.params.id }, function (err, compras) {
+
         res.json(compras);
     })
 })
@@ -423,7 +426,7 @@ router.post('/compra', (req, res, next) => {
         dataEvento: req.body.dataEvento,
         informacoes: req.body.informacoes,
         informacoesEvento: req.body.informacoesEvento,
-        quantidade: req.body.quantidade,        
+        quantidade: req.body.quantidade,
         status: 1
     })
 
@@ -439,7 +442,7 @@ router.post('/compra', (req, res, next) => {
 //Buscar
 router.get('/compra/:id', (req, res, next) => {
     let id = req.params.id;
-    Compra.findById(id, function(err, compra) {
+    Compra.findById(id, function (err, compra) {
         if (err) {
             res.json(err)
         } else {
@@ -452,14 +455,14 @@ router.get('/compra/:id', (req, res, next) => {
 router.post('/compra/editar', (req, res, next) => {
     let id = req.body._id;
 
-    Compra.findById(id, function(err, compra) {
+    Compra.findById(id, function (err, compra) {
         if (err) {
             res.json(err);
 
         } else {
             compra.status = req.body.status;
             compra.contrato = req.body.contrato;
-            compra.pagamentos =  req.body.pagamentos;
+            compra.pagamentos = req.body.pagamentos;
             compra.save();
             res.json({ menssage: "ok" });
         }
@@ -478,7 +481,7 @@ Fim Compras
 router.get('/:id/eventos', (req, res) => {
 
     let id = req.params['id'];
-    Evento.find({consumidor: id},(err, eventos) => {
+    Evento.find({ consumidor: id }, (err, eventos) => {
         res.json(eventos);
     })
 });
@@ -505,44 +508,44 @@ router.post('/evento', (req, res) => {
             console.log(e);
         } else {
             res.json({ msg: 'Evento adicionado com sucesso!' });
-            
+
         }
     });
 });
 
 //Buscar
 router.get('/evento/:id', (req, res, next) => {
-  let id = req.params.id;
-  Evento.findById(id, function(err, evento) {
-    if (err) {
-      res.json(err);
-      console.log(err);
-    } else {
-      res.json(evento);
-    }
-  });
+    let id = req.params.id;
+    Evento.findById(id, function (err, evento) {
+        if (err) {
+            res.json(err);
+            console.log(err);
+        } else {
+            res.json(evento);
+        }
+    });
 });
 
 router.post('/evento/editar', (req, res, next) => {
-  let id = req.body._id;
+    let id = req.body._id;
 
-  Evento.findById(id, function(err, evento) {
-    if (err) {
-      res.json(err);
+    Evento.findById(id, function (err, evento) {
+        if (err) {
+            res.json(err);
 
-    } else {
-      evento.nome = req.body.nome;
-      evento.desc = req.body.desc;
-      evento.segmento = req.body.segmento;
-      evento.dataevento = req.body.dataevento;
-      evento.hora = req.body.hora;
-      evento.desc = req.body.desc;
-      evento.produtos = req.body.produtos;
-      evento.servicos = req.body.servicos;
-      evento.save();
-      res.json({ menssage: "ok, evento editado! .. " });
-    }
-  });
+        } else {
+            evento.nome = req.body.nome;
+            evento.desc = req.body.desc;
+            evento.segmento = req.body.segmento;
+            evento.dataevento = req.body.dataevento;
+            evento.hora = req.body.hora;
+            evento.desc = req.body.desc;
+            evento.produtos = req.body.produtos;
+            evento.servicos = req.body.servicos;
+            evento.save();
+            res.json({ menssage: "ok, evento editado! .. " });
+        }
+    });
 });
 
 router.delete('/evento/:id', (req, res) => {
@@ -561,32 +564,41 @@ login provisório
 
 router.post('/login/provisorio', (req, res) => {
     let perfil = req.body.perfil;
-      
-    if(perfil == 'Consumidor') {
-        Consumidor.findOne({email: req.body.email, senha: req.body.senha}, function(err, consumidor) {
+
+    if (perfil == 'Consumidor') {
+        Consumidor.findOne({ email: req.body.email, senha: req.body.senha }, function (err, consumidor) {
             let login;
-            if(err) {
+            if (err) {
                 res.json(err);
             } else {
                 login = consumidor ? consumidor : false;
             }
 
-            res.json({msg: login});
+            res.json({ msg: login });
         });
     }
-    
+
     else if (perfil == 'Fornecedor') {
-        Fornecedor.findOne({email: req.body.email, senha: req.body.senha}, function(err, fornecedor) {
+        Fornecedor.findOne({ email: req.body.email, senha: req.body.senha }, function (err, fornecedor) {
             let login;
-            if(err) {
+            if (err) {
                 res.json(err);
             } else {
-                login = fornecedor ? fornecedor: false;
+                login = fornecedor ? fornecedor : false;
             }
 
-            res.json({msg: login});
+            res.json({ msg: login });
         });
     }
 });
+
+router.get('/cep/:cep', (req, response) => {
+    request(`http://viacep.com.br/ws/${req.params.cep}/json/`, { json: true }, (err, res, body) => {
+        if(err) {
+            return console.log(err);
+        }
+        response.send(res.body);
+    })
+})
 
 module.exports = router;

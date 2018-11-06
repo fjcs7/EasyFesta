@@ -18,7 +18,7 @@ export class ContratoService {
       let headers = new Headers({ 'Content-Type': 'application/json' });
       let options = new RequestOptions({ headers: headers });
 
-      return this.http.post(`https://young-ravine-88498.herokuapp.com:8080/api/contrato`, body, options).map((res: Response) => res.json());
+      return this.http.post(`https://young-ravine-88498.herokuapp.com/api/contrato`, body, options).map((res: Response) => res.json());
   }
 
   private getHeaders() {
@@ -37,7 +37,7 @@ export class ContratoService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.get(`https://young-ravine-88498.herokuapp.com:8080/api/contrato/`+body, options).map((res: Response) => res.json());
+    return this.http.get(`https://young-ravine-88498.herokuapp.com/api/contrato/`+body, options).map((res: Response) => res.json());
     
   }
 
@@ -46,7 +46,7 @@ export class ContratoService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(`https://young-ravine-88498.herokuapp.com:8080/api/contrato/editar`, body, options).map((res: Response) => res.json());
+    return this.http.post(`https://young-ravine-88498.herokuapp.com/api/contrato/editar`, body, options).map((res: Response) => res.json());
   }
 
   removerContrato(id) {
@@ -54,7 +54,7 @@ export class ContratoService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.delete(`https://young-ravine-88498.herokuapp.com:8080/api/contrato/`+body, options).map((res: Response) => res.json());
+    return this.http.delete(`https://young-ravine-88498.herokuapp.com/api/contrato/`+body, options).map((res: Response) => res.json());
         
   }
 
