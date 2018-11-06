@@ -1,1 +1,3 @@
-/node_modules/
+/easy-festa-frontend/node_modules/
+/easy-festa-frontend/dist/
+/easy-festa-frontend/.vscode/
